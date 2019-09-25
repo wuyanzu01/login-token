@@ -28,13 +28,11 @@ public class RedisConfig {
     }
 
     private void initSerializer(RedisTemplate<String, Object> template) {
-
         Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
         jackson2JsonRedisSerializer.setObjectMapper(objectMapper);
-
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
         //key采用String的序列化方式
         template.setKeySerializer(stringRedisSerializer);

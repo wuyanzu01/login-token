@@ -6,6 +6,7 @@ import com.demo.service.UserService;
 import com.demo.tools.JwtTokenUtil;
 import com.demo.tools.RedisUtil;
 import com.google.common.base.Throwables;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -37,7 +39,7 @@ public class UserServiceImpl implements UserService {
                     resultMap.put("token",token);
                     redisUtil.set("token:"+token,token,60*60); //redis中设置60分钟有效期
                 }catch(Exception e){
-                    Throwables.getStackTraceAsString(e);
+                    log.error(Throwables.getStackTraceAsString(e));
                     return resultMap;
                 }
                 resultMap.put("code",1);

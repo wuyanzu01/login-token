@@ -1,0 +1,25 @@
+server:
+  port: 8080
+  tomcat:
+    uri-encoding: utf-8
+  servlet:
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/user?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false&serverTimezone=CTT
+    username: root
+    password:
+  resources:
+    static-locations: classpath:static/,file:static/
+  #redis整合
+  redis:
+    database: 0
+    host: xxx #你的redis ip地址
+    port: 6379
+    timeout: 60000 #连接超时时间6000msc
+    lettuce:
+      pool:
+        max-idle: 200 # 连接池中的最小空闲连接
+        min-idle: 10 # 连接池中的最大空闲连接
+        max-active: 200 # 连接池最大连接数（使用负值表示没有限制）
+        max-wait: 1  # 连接池最大阻塞等待时间（使用负值表示没有限制）
+    password: xxx #你的redis的密码

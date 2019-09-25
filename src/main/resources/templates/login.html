@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>管理系统</title>
+  <link rel="stylesheet" href="static/css/login.css">
+  <script type="text/javascript" src="static/js/jquery.min.js"></script>
+  <script type="text/javascript" src="static/js/index.js"></script>
+  <script src="static/lib/layui/layui.js" charset="utf-8"></script>
+</head>
+<body class="login-bg">
+    <canvas id="fullstarbg">你的浏览器不支持canvas标签</canvas>
+    <div class="login">
+        <div class="message">管理系统<登录</div>
+        <div id="darkbannerwrap"></div>   
+        <form method="post" class="layui-form" >
+            <input name="username" placeholder="用户名"  type="text" lay-verify="required" class="layui-input" >
+            <hr class="hr15">
+            <input name="password" lay-verify="required" placeholder="密码"  type="password" class="layui-input">
+            <hr class="hr15">
+            <input value="登录" lay-submit lay-filter="login" style="width:100%;" type="submit">
+            <hr class="hr20" >
+        </form>
+    </div>
+    <script>
+            layui.use(['form'],
+            function() {
+                $ = layui.jquery;
+                var form = layui.form(),
+                layer = layui.layer;
+
+                //监听提交
+                form.on('submit(login)',
+                function(data) {
+                    console.log(data);
+                    var username=data.field.username;
+                    var userPass=data.field.password;
+                    $.ajax({
+                        url:"isLogin",
+                        type:"post",
+                        dataType:"json",
+                        data:{username:username,userPass:userPass},
+                        success:function (res) {
+                            var code=res.code;
+                            var token=res.token;
+                            if(code==1){
+                                layer.alert("登录成功","提示",function () {
+                                    sessionStorage.setItem("token",token);
+                                    location.href = "index";
+                                });
+                            }else if(code==2){
+                                layer.alert("参数有误，请检查参数");
+                            }else{
+                                layer.alert("登录失败");
+                            }
+                        }
+                    });
+                    return false;
+                });
+
+            });
+
+        </script>
+
+    
+    <!-- 底部结束 -->
+    
+</body>
+</html>
